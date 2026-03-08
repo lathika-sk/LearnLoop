@@ -1,0 +1,113 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stores student profile information and overall progress.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["student", "admin"] },
+        "points": { "type": "integer" },
+        "streak": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Topic": {
+      "title": "AI Topic Explanation",
+      "description": "Stores history of topics explained by AI.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "topic": { "type": "string" },
+        "explanation": { "type": "string" },
+        "examples": { "type": "array", "items": { "type": "string" } },
+        "diagramPrompt": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "topic", "explanation"]
+    },
+    "PaperAnalysis": {
+      "title": "Question Paper Analysis",
+      "description": "Stores results of AI analysis on uploaded question papers.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "fileName": { "type": "string" },
+        "importantQuestions": { "type": "array", "items": { "type": "string" } },
+        "repeatedTopics": { "type": "array", "items": { "type": "string" } },
+        "summary": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "fileName"]
+    },
+    "CareerRecommendation": {
+      "title": "Career Path Recommendation",
+      "description": "Stores AI-generated career and course suggestions.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "level": { "type": "string" },
+        "interests": { "type": "string" },
+        "recommendations": { "type": "array", "items": { "type": "object" } },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "level", "recommendations"]
+    },
+    "CourseProgress": {
+      "title": "Course Learning Progress",
+      "description": "Tracks student progress in specific skill modules.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "courseId": { "type": "string" },
+        "progress": { "type": "integer" },
+        "completed": { "type": "boolean" },
+        "lastAccessed": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "courseId", "progress"]
+    },
+    "Certificate": {
+      "title": "Course Certificate",
+      "description": "Stores details of earned certificates.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "courseId": { "type": "string" },
+        "courseName": { "type": "string" },
+        "issuedAt": { "type": "string", "format": "date-time" },
+        "certificateId": { "type": "string" }
+      },
+      "required": ["userId", "courseId", "certificateId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile document."
+    },
+    "/users/{userId}/topics/{topicId}": {
+      "schema": "Topic",
+      "description": "History of AI explanations for a user."
+    },
+    "/users/{userId}/paper_analyses/{analysisId}": {
+      "schema": "PaperAnalysis",
+      "description": "Analysis of uploaded papers for a user."
+    },
+    "/users/{userId}/career_recommendations/{recId}": {
+      "schema": "CareerRecommendation",
+      "description": "Saved career recommendations for a user."
+    },
+    "/users/{userId}/course_progress/{progressId}": {
+      "schema": "CourseProgress",
+      "description": "Learning progress for specific courses."
+    },
+    "/users/{userId}/certificates/{certId}": {
+      "schema": "Certificate",
+      "description": "Certificates earned by a user."
+    }
+  }
+}

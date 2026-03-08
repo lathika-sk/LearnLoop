@@ -1,0 +1,8 @@
+{
+  "name": "LearnLoop",
+  "description": "A full-stack AI-powered student assistant for topic solving, paper analysis, career guidance, and skill learning.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
